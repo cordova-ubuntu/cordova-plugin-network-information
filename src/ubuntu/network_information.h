@@ -17,7 +17,8 @@
 
 #include <cplugin.h>
 
-#include <QtSystemInfo>
+#include <connectivityqt/connectivity.h>
+
 #include <QtCore>
 
 class NetworkInformation: public CPlugin {
@@ -41,7 +42,7 @@ public slots:
     void getConnectionInfo(int scId, int ecId);
 
 private:
-    QNetworkInfo m_systemNetworkInfo;
+    connectivityqt::Connectivity m_connectivity;
 };
 
 #endif

@@ -18,45 +18,16 @@ void NetworkInformation::getConnectionInfo(int scId, int ecId) {
     Q_UNUSED(ecId);
 
     QString result;
-    QNetworkInfo::NetworkMode networkMode = m_systemNetworkInfo.currentNetworkMode();
-    QNetworkInfo::NetworkStatus networkStatus = m_systemNetworkInfo.networkStatus(networkMode, 0);
-    QNetworkInfo::CellDataTechnology cellDataTechnology = m_systemNetworkInfo.currentCellDataTechnology(0);
-
-    if (networkStatus == QNetworkInfo::NoNetworkAvailable)
+    if (! m_connectivity.online) {
         result = "Connection.NONE";
-
-    switch (networkMode) {
-    case QNetworkInfo::WimaxMode:
-    case QNetworkInfo::WlanMode:
+    } else if (m_connectivity.wifiEnabled) {
         result = "Connection.WIFI";
-        break;
-    case QNetworkInfo::EthernetMode:
-        result = "Connection.ETHERNET";
-        break;
-    case QNetworkInfo::LteMode:
-        result = "Connection.CELL_4G";
-        break;
-    case QNetworkInfo::GsmMode:
-    case QNetworkInfo::CdmaMode:
-    case QNetworkInfo::TdscdmaMode:
-    case QNetworkInfo::WcdmaMode:
-        switch (cellDataTechnology) {
-        case QNetworkInfo::UmtsDataTechnology:
-        case QNetworkInfo::HspaDataTechnology:
-            result = "Connection.CELL_3G";
-            break;
-        case QNetworkInfo::EdgeDataTechnology:
-        case QNetworkInfo::GprsDataTechnology:
-            result = "Connection.CELL_2G";
-            break;
-        case QNetworkInfo::UnknownDataTechnology:
-            result = "Connection.UNKNOWN";
-            break;
-        }
-    case QNetworkInfo::BluetoothMode:
-    case QNetworkInfo::UnknownMode:
+    } else if (m_connectivity.limitedBandwith) {
+        // TODO as of now the connectivity API does not offer a
+        // fine grained view of the type of cell connection
+        result = "Connection.CELL";
+    } else {
         result = "Connection.UNKNOWN";
-        break;
     }
 
     this->callback(scId, result);

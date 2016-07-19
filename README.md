@@ -54,6 +54,7 @@ Report issues with this plugin on the [Apache Cordova issue tracker][Apache Cord
 - Tizen
 - Windows
 - Firefox OS
+- Ubuntu
 
 # Connection
 
@@ -139,6 +140,11 @@ eventually be removed.
 
 - Browser can't detect the type of network connection.
 `navigator.connection.type` is always set to `Connection.UNKNOWN` when online.
+
+### Ubuntu Quirks
+
+- <UbuntuTouch can't detect the type of cellular network connection.
+    - `navigator.connection.type` is set to `Connection.CELL` for all cellular data.
 
 # Network-related Events
 

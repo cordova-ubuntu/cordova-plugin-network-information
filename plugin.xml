@@ -82,8 +82,12 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <!-- ubuntu -->
     <platform name="ubuntu">
         <config-file target="config.xml" parent="/*">
-            <feature name="Camera">
+            <feature name="NetworkStatus">
                 <param policy_group="connectivity" policy_version="1" />
+                <deps>
+                    <pkgConfig>["connectivity-qt1"]</pkgConfig>
+                    <deb>["libconnectivity-qt1-dev:ARCH"]</deb>
+                </deps>
             </feature>
         </config-file>
         <header-file src="src/ubuntu/network_information.h" />
