@@ -18,11 +18,11 @@ void NetworkInformation::getConnectionInfo(int scId, int ecId) {
     Q_UNUSED(ecId);
 
     QString result;
-    if (! m_connectivity.online) {
+    if (! m_connectivity.online()) {
         result = "Connection.NONE";
-    } else if (m_connectivity.wifiEnabled) {
+    } else if (m_connectivity.wifiEnabled()) {
         result = "Connection.WIFI";
-    } else if (m_connectivity.limitedBandwith) {
+    } else if (m_connectivity.limitedBandwith()) {
         // TODO as of now the connectivity API does not offer a
         // fine grained view of the type of cell connection
         result = "Connection.CELL";
